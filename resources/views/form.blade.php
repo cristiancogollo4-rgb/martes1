@@ -20,7 +20,7 @@
 
 <div class="container">
     <h2>Contáctame</h2>
-    <form action="/enviar-formulario" method="POST">
+    <form action="/contacto" method="GET">
         <div class="form-group">
             <label for="email">Correo Electrónico:</label>
             <input type="email" id="email" name="email" placeholder="tu@correo.com" required>

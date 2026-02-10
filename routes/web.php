@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,12 @@ Route::get('/', function () {
 Route::get('/formulario', function () {
     return view('form');
 });
-
+Route::get('/contacto', function (Request $request) {
+    echo "<pre>";
+    print_r($request->get("email"));
+    print_r($request->get("mensaje"));
+    echo "<pre>";
+});
 
 Route::get('/mi-ruta-app', function () {
     $nombre = "cristian";
