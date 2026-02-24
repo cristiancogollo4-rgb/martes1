@@ -15,7 +15,7 @@ class categoryseeder extends Seeder
      */
     public function run()
     {
-        $tecnologia = new category();
+        $tecnologia = new Category();
         $tecnologia->name = 'Tecnología';
         $tecnologia->description = "todo lo relacionado";
         $tecnologia->save();
