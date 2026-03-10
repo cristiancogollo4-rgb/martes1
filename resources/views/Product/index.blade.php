@@ -46,10 +46,15 @@
                             {{ $prod->estado ?? 'nuevo' }}
                         </span>
                     </td>
-                    <td style="padding: 15px 20px;">
+                    <td style="padding: 15px 20px; display: flex; gap: 10px;">
                         <a href="{{ url('/product/'.$prod->id) }}" style="color: #6366f1; text-decoration: none; font-weight: 600; font-size: 0.9rem;">
                             Ver Detalle
                         </a>
+                        <form action="{{ route('product.destroy', $prod->id) }}" method="POST" onsubmit="return confirm('¿Eliminar este producto?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" style="background:none;border:none;color:#ef4444;font-weight:600;cursor:pointer;font-size:0.9rem;">Eliminar</button>
+                        </form>
                     </td>
                 </tr>
                 @empty

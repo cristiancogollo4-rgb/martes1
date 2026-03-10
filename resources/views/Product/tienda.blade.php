@@ -147,6 +147,22 @@
         @endforelse
     </section>
 
+    {{-- Paginador --}}
+    <nav style="display: flex; justify-content: center; margin: 40px 0;">
+        {{-- Mostrar enlaces prev/next manualmente para mantener diseño sencillo --}}
+        @if ($productList->onFirstPage())
+            <span class="btn-admin" style="opacity:0.5; cursor:default; margin-right:10px;">Anterior</span>
+        @else
+            <a href="{{ $productList->previousPageUrl() }}" class="btn-admin" style="margin-right:10px;">Anterior</a>
+        @endif
+
+        @if ($productList->hasMorePages())
+            <a href="{{ $productList->nextPageUrl() }}" class="btn-admin">Siguiente</a>
+        @else
+            <span class="btn-admin" style="opacity:0.5; cursor:default;">Siguiente</span>
+        @endif
+    </nav>
+
     <footer>
         &copy; {{ date('Y') }} - Desarrollado en Laravel
     </footer>

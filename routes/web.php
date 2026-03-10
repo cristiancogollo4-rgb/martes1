@@ -14,6 +14,8 @@ Route::prefix("/product")->controller(ProductController::class)->group(function 
     Route::get('/create', "create")->name('product.create');
     Route::get('/{id}', "show")->name('product.show');
     Route::post('/', "store")->name('product.store');
+    // ruta para eliminar un producto
+    Route::delete('/{id}', "destroy")->name('product.destroy');
 });
 
 // Ruta de Contacto (Para que tu nuevo formulario funcione)

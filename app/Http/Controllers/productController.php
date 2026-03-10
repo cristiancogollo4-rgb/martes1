@@ -75,10 +75,20 @@ class ProductController extends Controller
 
 public function shop()
 {
-    // Traemos todos los productos de la base de datos
-    $productList = \App\Models\Product::all(); 
+    // Obtenemos productos paginados a 10 por página
+    $productList = \App\Models\Product::paginate(10);
     
     // Se los enviamos a la vista 'tienda'
     return view('product.tienda', compact('productList'));
 }
+
+    /**
+     * Remove the specified product from storage.
+     */
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect()->route('product.index')->with('success', 'Producto eliminado correctamente');
+    }
 }
