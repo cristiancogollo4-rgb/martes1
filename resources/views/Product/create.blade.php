@@ -12,8 +12,19 @@
 
         <div class="form-container" style="padding: 30px;">
             {{-- Importante: El action debe ser /product/store --}}
-            <form method="POST" action="{{ url('/product') }}">
+            <form method="POST" action="{{ url('/product') }}" enctype="multipart/form-data">
                 @csrf
+
+                @if ($errors->any())
+                    <div style="margin-bottom: 20px; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; border-radius: 8px; padding: 12px;">
+                        <strong>Corrige los siguientes errores:</strong>
+                        <ul style="margin: 8px 0 0 18px;">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <div style="margin-bottom: 20px;">
                     <label style="display: block; font-weight: 600; margin-bottom: 8px;">Nombre del Producto <span style="color:red">*</span></label>
@@ -34,6 +45,12 @@
                 <div style="margin-bottom: 20px;">
                     <label style="display: block; font-weight: 600; margin-bottom: 8px;">Descripción <span style="color:red">*</span></label>
                     <textarea name="descripcion" style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; min-height: 100px;" placeholder="Detalles técnicos..." required></textarea>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px;">Imagen del producto</label>
+                    <input type="file" name="image" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff;">
+                    <small style="display: block; margin-top: 6px; color: #6b7280;">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB.</small>
                 </div>
 
                 <button type="submit" style="width: 100%; background: #2563eb; color: white; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;">
