@@ -31,6 +31,16 @@
                     <input type="text" name="nombre" style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;" placeholder="Ej: Monitor 4K" required>
                 </div>
 
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px;">Categoría <span style="color:red">*</span></label>
+                    <select name="category_id" style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;" required>
+                        <option value="">Selecciona una categoría</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
                     <div>
                         <label style="display: block; font-weight: 600; margin-bottom: 8px;">Precio <span style="color:red">*</span></label>

@@ -41,6 +41,7 @@ class ProductController extends Controller
     // Usamos 'nombre' y 'descripcion' porque así están en tu HTML (el de tu compañero)
     $request->validate([
         'nombre' => 'required',
+        'category_id' => 'required|exists:categories,id',
         'price' => 'required|numeric',
         'stock' => 'required|integer',
         'descripcion' => 'required', 
@@ -52,6 +53,7 @@ class ProductController extends Controller
     
     // IMPORTANTE: Asegúrate de que en tu base de datos la columna se llame 'name'
     $product->name = $request->nombre; 
+    $product->category_id = $request->category_id;
     $product->price = $request->price;
     $product->stock = $request->stock;
     $product->description = $request->descripcion; // Aquí estaba el error, faltaba asignar la descripción
