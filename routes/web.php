@@ -1,71 +1,31 @@
 <?php
 
+use App\Http\Controllers\ProductController; // Asegúrate que la P sea mayúscula
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpFoundation\Request;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-Route::get('/formulario', function () {
-    return view('form');
-});
-Route::get('/contacto', function (Request $request) {
-    echo "<pre>";
-    print_r($request->get("email"));
-    print_r($request->get("mensaje"));
-    echo "<pre>";
+// Rutas de Producto
+Route::prefix("/product")->controller(ProductController::class)->group(function () {
+    Route::get('/index', "index")->name('product.index');
+    Route::get('/create', "create")->name('product.create');
+    Route::get('/{id}', "show")->name('product.show');
+    Route::post('/', "store")->name('product.store');
 });
 
-Route::get('/mi-ruta-app', function () {
-    $nombre = "cristian";
-    $apellido = "cogollo";
-    $nombreCompleto = $nombre . $apellido;
-    $age= rand(18, 60);
-    $height=1.75;
-    $islogin=(bool) rand(0,1);
-    echo $nombreCompleto;
-    echo"*************ESTRUCTURA DE DATOS****************";
-    $message = "<br> <br> Hola, mi nombre es $nombreCompleto, tengo $age años, mido $height metros <br> <br>" ;
-    echo $message;
-    if ($age < 18) {
-        echo "<br> <br> Soy menor de edad.";
-    } else if ( $age > 50) {
-        echo "<br> <br> Soy menor de edad.";
-    }else {echo "<br> <br> Soy adulto.";};
-
-    echo"<br> <br> *************FUNCIONES****************<br> <br>";
-
-        echo printUser($nombreCompleto, $age);
-    #return "HOLA ESTA ES MI RUTA EN LARAVEL";
-
-    $productsName = ["camisa", "pantalon", 25, true];
-    $teclado = [
-        "marca" => "logitech",
-        "modelo" => "g213",
-        "color" => "negro",
-        "precio" => 100,
-        "distribuciones" => ["latino", "mexico", "americano"]
-    ];
-
-    echo $teclado["marca"];
-    foreach ($productsName as $item) {
-        echo "<br> $item";
-    }
+// Ruta de Contacto (Para que tu nuevo formulario funcione)
+Route::get('/contacto', function () {
+    return view('form'); 
 });
- function printUser($nombre, $age){
-        return "$nombre tiene $age años";
-    }
+
+// Mantener la ruta de proceso de contacto que ya tenías
+Route::post('/contacto/enviar', function (Request $request) {
+    // Aquí procesarías el correo
+    return "Mensaje recibido de: " . $request->input('email');
+});
+
+// Esta será la cara que ven los clientes
+Route::get('/tienda', [ProductController::class, 'shop'])->name('product.shop');

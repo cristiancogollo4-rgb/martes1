@@ -28,30 +28,39 @@ add_or_set_remote() {
 add_or_set_remote "peer" "$peer_url"
 add_or_set_remote "mine" "$mine_url"
 
-echo "[1/3] Descargando cambios remotos..."
+echo "[1/4] Descargando cambios remotos..."
 git fetch peer "$branch"
 git fetch mine "$branch"
 
 echo
-echo "[2/3] Commits que están en el repo de tu compañero y faltan en tu repo:"
-missing_from_mine="$(git log --oneline "mine/$branch..peer/$branch")"
-if [[ -n "$missing_from_mine" ]]; then
-  echo "$missing_from_mine"
+echo "[2/4] Archivos que existen en el repo de tu compañero y NO en tu repo:"
+only_in_peer="$(git diff --name-status "mine/$branch" "peer/$branch" | awk '$1 == "A" {print $2}')"
+if [[ -n "$only_in_peer" ]]; then
+  echo "$only_in_peer"
 else
-  echo "No hay commits faltantes ✅"
+  echo "No hay archivos faltantes en tu repo ✅"
 fi
 
 echo
-echo "[3/3] Commits que están en tu repo y no en el de tu compañero:"
-missing_from_peer="$(git log --oneline "peer/$branch..mine/$branch")"
-if [[ -n "$missing_from_peer" ]]; then
-  echo "$missing_from_peer"
+echo "[3/4] Archivos que existen en tu repo y NO en el de tu compañero:"
+only_in_mine="$(git diff --name-status "mine/$branch" "peer/$branch" | awk '$1 == "D" {print $2}')"
+if [[ -n "$only_in_mine" ]]; then
+  echo "$only_in_mine"
 else
-  echo "No hay commits exclusivos en tu repo ✅"
+  echo "No hay archivos exclusivos en tu repo ✅"
 fi
 
 echo
-echo "Sugerencia para traer commits concretos (cherry-pick):"
-echo "  git cherry-pick <hash_commit>"
-echo "Sugerencia para alinear toda la rama (merge):"
-echo "  git checkout $branch && git merge peer/$branch"
+echo "[4/4] Archivos compartidos pero con contenido diferente:"
+modified_files="$(git diff --name-status "mine/$branch" "peer/$branch" | awk '$1 == "M" {print $2}')"
+if [[ -n "$modified_files" ]]; then
+  echo "$modified_files"
+else
+  echo "No hay diferencias de contenido entre archivos compartidos ✅"
+fi
+
+echo
+echo "Sugerencia para inspeccionar diferencias de un archivo:"
+echo "  git diff mine/$branch peer/$branch -- <ruta/archivo>"
+echo "Sugerencia para traer un archivo desde el repo compañero:"
+echo "  git checkout peer/$branch -- <ruta/archivo>"
