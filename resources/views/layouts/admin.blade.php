@@ -6,25 +6,80 @@
     <title>@yield('title', 'Admin Ecommerce')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        .admin-table-wrap {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: .8rem .9rem;
+            border-bottom: 1px solid #eef2f7;
+            vertical-align: middle;
+        }
+
+        .admin-table thead th {
+            background: #f8fafc;
+            font-size: .85rem;
+            color: #475569;
+        }
+
         .actions-cell {
+            text-align: right;
+            width: 1%;
             white-space: nowrap;
         }
 
         .actions-group {
             display: inline-flex;
-            gap: .35rem;
             align-items: center;
-            justify-content: flex-end;
+            gap: .4rem;
+            flex-wrap: nowrap;
         }
 
-        .actions-group .btn {
-            width: auto !important;
-            padding: .22rem .55rem;
-            font-size: .76rem;
-            line-height: 1.2;
+        .admin-action-btn {
+            display: inline-block;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            font-size: .75rem;
+            line-height: 1;
+            padding: .38rem .55rem;
+            text-decoration: none;
+            background: #fff;
+            cursor: pointer;
         }
 
-        .actions-group form {
+        .admin-action-btn:hover {
+            opacity: .9;
+        }
+
+        .admin-action-btn.primary {
+            color: #1d4ed8;
+            border-color: #bfdbfe;
+            background: #eff6ff;
+        }
+
+        .admin-action-btn.neutral {
+            color: #334155;
+            border-color: #cbd5e1;
+            background: #f8fafc;
+        }
+
+        .admin-action-btn.danger {
+            color: #b91c1c;
+            border-color: #fecaca;
+            background: #fff1f2;
+        }
+
+        .admin-action-form {
+            display: inline;
             margin: 0;
         }
     </style>
