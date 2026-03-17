@@ -8,15 +8,15 @@
     <a href="{{ route('admin.categories.create') }}" class="btn btn-primary btn-sm">Nueva categoría</a>
 </div>
 <table class="table table-bordered bg-white align-middle">
-    <thead><tr><th>Nombre</th><th>Slug</th><th>Descripción</th><th class="text-end">Acciones</th></tr></thead>
+    <thead><tr><th>Nombre</th><th>Slug</th><th>Descripción</th><th class="text-end actions-cell">Acciones</th></tr></thead>
     <tbody>
     @forelse($categories as $category)
         <tr>
             <td>{{ $category->name }}</td>
             <td>{{ $category->slug }}</td>
             <td>{{ $category->description }}</td>
-            <td class="text-end">
-                <div class="d-inline-flex gap-2">
+            <td class="text-end actions-cell">
+                <div class="actions-group">
                     <a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-sm btn-outline-secondary">Editar</a>
                     <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="d-inline">
                         @csrf @method('DELETE')

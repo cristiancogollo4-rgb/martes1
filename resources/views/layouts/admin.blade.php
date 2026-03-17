@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Admin Ecommerce')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .actions-cell {
+            white-space: nowrap;
+        }
+
+        .actions-group {
+            display: inline-flex;
+            gap: .35rem;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .actions-group .btn {
+            width: auto !important;
+            padding: .22rem .55rem;
+            font-size: .76rem;
+            line-height: 1.2;
+        }
+
+        .actions-group form {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
 <div class="d-flex min-vh-100">
