@@ -1,33 +1,31 @@
 <?php
 
-use App\Http\Controllers\ProductController; // Asegúrate que la P sea mayúscula
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [LandingController::class, 'index'])->name('landing');
+
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+Route::prefix('cart')->name('cart.')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('index');
+    Route::post('/products/{product}', [CartController::class, 'store'])->name('store');
+    Route::patch('/products/{product}', [CartController::class, 'update'])->name('update');
+    Route::delete('/products/{product}', [CartController::class, 'destroy'])->name('destroy');
 });
 
-// Rutas de Producto
-Route::prefix("/product")->controller(ProductController::class)->group(function () {
-    Route::get('/index', "index")->name('product.index');
-    Route::get('/create', "create")->name('product.create');
-    Route::get('/{id}', "show")->name('product.show');
-    Route::post('/', "store")->name('product.store');
-    // ruta para eliminar un producto
-    Route::delete('/{id}', "destroy")->name('product.destroy');
-});
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::view('/', 'admin.dashboard')->name('dashboard');
 
-// Ruta de Contacto (Para que tu nuevo formulario funcione)
-Route::get('/contacto', function () {
-    return view('form'); 
-});
+    Route::get('/products', [ProductController::class, 'adminIndex'])->name('products.index');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
-// Mantener la ruta de proceso de contacto que ya tenías
-Route::post('/contacto/enviar', function (Request $request) {
-    // Aquí procesarías el correo
-    return "Mensaje recibido de: " . $request->input('email');
-});
+    Route::resource('categories', CategoryController::class)->except(['show']);
 
-// Esta será la cara que ven los clientes
-Route::get('/tienda', [ProductController::class, 'shop'])->name('product.shop');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+});

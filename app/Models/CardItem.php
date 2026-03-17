@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class card_item extends Model
+class CardItem extends Model
 {
+    use HasFactory;
+
     protected $table = 'card_items';
-    public $timestamps = true;
 }
